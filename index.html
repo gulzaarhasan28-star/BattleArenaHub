@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BattleArenaHub - Login</title>
+
+  <!-- Firebase -->
+  <script type="module" src="firebase.js"></script>
+
+  <style>
+    body{
+      background:#050b1a;
+      color:white;
+      font-family:Arial;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+    .box{
+      background:#0c1633;
+      padding:30px;
+      border-radius:12px;
+      text-align:center;
+      width:300px;
+    }
+    button{
+      width:100%;
+      padding:12px;
+      margin-top:15px;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      cursor:pointer;
+      background:#1abc9c;
+      color:black;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>BattleArenaHub</h2>
+    <p>Login with Google</p>
+
+    <button onclick="login()">Continue with Google</button>
+  </div>
+</body>
+</html>
