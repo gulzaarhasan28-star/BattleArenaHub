@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>BattleArenaHub - Login</title>
 
-  <!-- Firebase -->
+  <!-- Firebase JS -->
   <script type="module" src="firebase.js"></script>
 
   <style>
@@ -43,7 +43,18 @@
   <div class="box">
     <h2>BattleArenaHub</h2>
     <p>Login with Google</p>
-<button onclick="login()">
-  Continue with Google
-</button>
+
+    <!-- ❌ onclick नहीं -->
+    <button id="loginBtn">Continue with Google</button>
+  </div>
+
+  <!-- ✅ Button JS -->
+  <script type="module">
+    import { login } from "./firebase.js";
+
+    document.getElementById("loginBtn")
+      .addEventListener("click", login);
+  </script>
+</body>
+</html>
     
