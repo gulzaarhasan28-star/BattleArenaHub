@@ -28,10 +28,21 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 // Google Login
-window.login = async () => {
-  await signInWithPopup(auth, provider);
-  window.location.href = "submit-id.html";
+import { signInWithRedirect, getRedirectResult } from
+"https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+window.login = () => {
+  signInWithRedirect(auth, provider);
 };
+
+// Redirect ke baad result handle
+getRedirectResult(auth).then((result) => {
+  if (result && result.user) {
+    window.location.href = "submit-id.html";
+  }
+}).catch((error) => {
+  alert(error.message);
+});
 
 // BGMI Submit
 window.submitBGMI = async () => {
