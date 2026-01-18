@@ -3,18 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Complete Profile</title>
+
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <style>
-body{background:#667eea;font-family:Segoe UI;display:flex;justify-content:center;align-items:center;height:100vh}
-.box{background:#fff;padding:25px;border-radius:14px;width:100%;max-width:360px}
-input,select,button{width:100%;padding:12px;margin-top:10px}
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#667eea;
+  font-family:Segoe UI;
+}
+.box{
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
+  width:100%;
+  max-width:360px;
+}
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="box">
 <h3>Complete Profile</h3>
 <input id="whatsapp" placeholder="WhatsApp Number">
@@ -23,29 +43,37 @@ input,select,button{width:100%;padding:12px;margin-top:10px}
   <option value="BGMI">BGMI</option>
   <option value="FREE_FIRE">Free Fire</option>
 </select>
-<input id="gameId" placeholder="Game ID">
+<input id="gameId" placeholder="Game ID / UID">
 <button onclick="save()">Save</button>
 </div>
 
 <script src="firebase-config.js"></script>
+
 <script>
+auth.onAuthStateChanged(u=>{
+  if(!u) location.href="index.html";
+});
+
 async function save(){
- const u = auth.currentUser;
- if(!u) return;
+  const u = auth.currentUser;
+  if(!u) return;
 
- await db.collection("users").doc(u.uid).set({
-  name:u.displayName,
-  email:u.email,
-  whatsapp:whatsapp.value,
-  game:game.value,
-  gameId:gameId.value,
-  coins:0,
-  weeklyCoins:0,
-  createdAt:firebase.firestore.FieldValue.serverTimestamp()
- },{merge:true});
+  if(!game.value) return alert("Select game");
 
- location.href="router.html";
+  await db.collection("users").doc(u.uid).set({
+    name:u.displayName,
+    email:u.email,
+    whatsapp:whatsapp.value,
+    game:game.value,
+    gameId:gameId.value,
+    coins:0,
+    weeklyCoins:0,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  },{merge:true});
+
+  location.href="router.html";
 }
 </script>
+
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Login | BattleArenaHub</title>
+<title>BattleArenaHub – Login</title>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -15,16 +15,16 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#6a11cb,#2575fc);
   font-family:Segoe UI;
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
 }
 .box{
   background:#fff;
   padding:30px;
   border-radius:16px;
-  text-align:center;
   width:100%;
   max-width:360px;
+  text-align:center;
 }
 button{
   width:100%;
@@ -32,11 +32,11 @@ button{
   border:none;
   border-radius:30px;
   background:#4285f4;
-  color:#fff;
+  color:white;
   font-size:16px;
   font-weight:bold;
 }
-.msg{margin-top:15px;font-size:14px;color:red}
+.msg{margin-top:12px;color:red}
 </style>
 </head>
 
@@ -50,8 +50,9 @@ button{
 </div>
 
 <script src="firebase-config.js"></script>
+
 <script>
-document.getElementById("loginBtn").onclick = ()=>{
+document.getElementById("loginBtn").onclick = () => {
   auth.signInWithRedirect(provider);
 };
 

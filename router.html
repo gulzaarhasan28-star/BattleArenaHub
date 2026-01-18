@@ -8,20 +8,30 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 
-<body>
-<h3 style="text-align:center">Checking profile...</h3>
+<body style="font-family:Segoe UI;text-align:center">
+<h3>Checking profile...</h3>
 
 <script src="firebase-config.js"></script>
+
 <script>
 auth.onAuthStateChanged(async user=>{
-  if(!user){ location.href="index.html"; return; }
+  if(!user){
+    location.href="index.html";
+    return;
+  }
 
   const snap = await db.collection("users").doc(user.uid).get();
-  if(!snap.exists){ location.href="profile.html"; return; }
+
+  if(!snap.exists){
+    location.href="profile.html";
+    return;
+  }
 
   const d = snap.data();
+
   if(!d.game || !d.gameId || !d.whatsapp){
-    location.href="profile.html"; return;
+    location.href="profile.html";
+    return;
   }
 
   if(d.game==="BGMI") location.href="bgmi-dashboard.html";
