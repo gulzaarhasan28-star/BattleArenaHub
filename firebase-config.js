@@ -1,4 +1,8 @@
-// Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyDyXFlrTwnkUGFm9FPTw6lv6es7Uu5YhU4",
   authDomain: "battlearenahub-e8377.firebaseapp.com",
@@ -8,12 +12,13 @@ const firebaseConfig = {
   appId: "1:183863662072:web:e06705f1d7415cc3ceb20d"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-// Set custom parameters for Google Auth if needed
-provider.setCustomParameters({
-  prompt: 'select_account'
-});
+// GLOBAL EXPORTS (VERY IMPORTANT)
+window.auth = firebase.auth();
+window.db = firebase.firestore();
+window.provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
+</script>
