@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .profile-header i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .profile-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .game-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .game-option {
+            position: relative;
+        }
+
+        .game-option input {
+            display: none;
+        }
+
+        .game-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .game-option input:checked + .game-card {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .bgmi .game-card {
+            border-color: #FF6B35;
+        }
+
+        .bgmi input:checked + .game-card {
+            border-color: #FF6B35;
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .freefire .game-card {
+            border-color: #00B894;
+        }
+
+        .freefire input:checked + .game-card {
+            border-color: #00B894;
+            background: rgba(0, 184, 148, 0.05);
+        }
+
+        .game-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .bgmi .game-icon {
+            color: #FF6B35;
+        }
+
+        .freefire .game-icon {
+            color: #00B894;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .game-id-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <i class="fas fa-user-plus"></i>
+            <h1>Complete Your Profile</h1>
+            <p class="subtitle">Fill details to continue</p>
+        </div>
+        
+        <div class="profile-form">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Number
+                    </label>
+                    <input type="text" 
+                           id="whatsapp" 
+                           placeholder="Enter 10-digit number"
+                           maxlength="10"
+                           required>
+                    <small style="color: #6b7280; font-size: 12px; display: block; margin-top: 5px;">
+                        Only for verification & notifications
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-gamepad"></i> Select Your Game</label>
+                    <div class="game-selection">
+                        <div class="game-option bgmi">
+                            <input type="radio" id="bgmi" name="game" value="bgmi" required>
+                            <label for="bgmi">
+                                <div class="game-card">
+                                    <div class="game-icon">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </div>
+                                    <h3>BGMI</h3>
+                                    <p>Battlegrounds Mobile India</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="game-option freefire">
+                            <input type="radio" id="freefire" name="game" value="freefire" required>
+                            <label for="freefire">
+                                <div class="game-card">
+                                    <div class="game-icon">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <h3>Free Fire</h3>
+                                    <p>Garena Free Fire</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group game-id-field" id="bgmiIdField">
+                    <label for="bgmiId">
+                        <i class="fas fa-id-card"></i> BGMI ID
+                    </label>
+                    <input type="text" 
+                           id="bgmiId" 
+                           placeholder="Enter your BGMI ID">
+                </div>
+                
+                <div class="form-group game-id-field" id="freefireIdField">
+                    <label for="freefireId">
+                        <i class="fas fa-id-card"></i> Free Fire UID
+                    </label>
+                    <input type="text" 
+                           id="freefireId" 
+                           placeholder="Enter your Free Fire UID">
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-check"></i> Complete Setup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration (same as index.html)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Show game ID field based on selection
+        document.querySelectorAll('input[name="game"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.game-id-field').forEach(field => {
+                    field.style.display = 'none';
+                });
+                
+                if (this.value === 'bgmi') {
+                    document.getElementById('bgmiIdField').style.display = 'block';
+                } else {
+                    document.getElementById('freefireIdField').style.display = 'block';
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = JSON.parse(localStorage.getItem('newUser'));
+            if (!userData) {
+                alert('Please login first');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const whatsapp = document.getElementById('whatsapp').value;
+            const game = document.querySelector('input[name="game"]:checked').value;
+            const gameId = game === 'bgmi' 
+                ? document.getElementById('bgmiId').value 
+                : document.getElementById('freefireId').value;
+
+            // Validate WhatsApp number (Indian)
+            const whatsappRegex = /^[6-9]\d{9}$/;
+            if (!whatsappRegex.test(whatsapp)) {
+                alert('Please enter a valid 10-digit WhatsApp number');
+                return;
+            }
+
+            // Validate Game ID
+            if (game === 'bgmi' && !/^\d{7,10}$/.test(gameId)) {
+                alert('Please enter a valid BGMI ID (7-10 digits)');
+                return;
+            }
+            
+            if (game === 'freefire' && !/^\d{9,12}$/.test(gameId)) {
+                alert('Please enter a valid Free Fire UID (9-12 digits)');
+                return;
+            }
+
+            try {
+                // Save user data to Firestore
+                await db.collection('users').doc(userData.uid).set({
+                    uid: userData.uid,
+                    email: userData.email,
+                    name: userData.name,
+                    photoURL: userData.photoURL,
+                    whatsapp: whatsapp,
+                    game: game,
+                    gameId: gameId,
+                    coins: 0,
+                    weeklyCoins: 0,
+                    rank: 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    profileCompleted: true,
+                    dashboard: game // 'bgmi' or 'freefire'
+                });
+
+                // Create leaderboard entry
+                await db.collection('leaderboard').doc(userData.uid).set({
+                    name: userData.name,
+                    game: game,
+                    gameId: gameId,
+                    weeklyCoins: 0,
+                    totalCoins: 0,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Clear local storage
+                localStorage.removeItem('newUser');
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                alert('Error saving profile. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
