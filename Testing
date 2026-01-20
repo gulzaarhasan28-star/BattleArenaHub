@@ -1,0 +1,23 @@
+// firebase-config.js me ye temporary code dal dein
+console.log("Firebase config loading...");
+
+// Mock Firebase functions for testing
+const mockAuth = {
+    currentUser: null,
+    signInWithPopup: () => Promise.resolve({user: {email: "test@example.com"}})
+};
+
+const mockDb = {
+    collection: () => ({
+        doc: () => ({
+            get: () => Promise.resolve({exists: false}),
+            set: () => Promise.resolve()
+        })
+    })
+};
+
+export const auth = mockAuth;
+export const db = mockDb;
+export const storage = {};
+
+console.log("✅ Mock Firebase loaded for testing");
