@@ -1,298 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 BattleArenaHub - Gaming Dashboard</title>
-    
-    <!-- Firebase Configuration -->
-    <script type="module" src="firebase-config.js"></script>
-    
-    <style>
-        /* Modern Gaming Theme */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .login-container {
-            width: 100%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-        }
-        
-        .logo {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 0 0 20px #00ffea;
-        }
-        
-        h1 {
-            color: white;
-            margin-bottom: 10px;
-            font-size: 2.2rem;
-        }
-        
-        .tagline {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-        
-        .google-btn {
-            width: 100%;
-            padding: 16px;
-            background: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s;
-            margin-bottom: 25px;
-        }
-        
-        .google-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
-        }
-        
-        .google-btn img {
-            width: 24px;
-            height: 24px;
-        }
-        
-        .features {
-            display: grid;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            text-align: left;
-        }
-        
-        .feature i {
-            color: #00ffea;
-            font-size: 1.2rem;
-            width: 24px;
-        }
-        
-        .game-icons {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 25px;
-        }
-        
-        .game-icon {
-            text-align: center;
-            color: white;
-        }
-        
-        .bgmi-icon {
-            color: #FF6B35;
-        }
-        
-        .ff-icon {
-            color: #00B894;
-        }
-        
-        .game-icon i {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-        }
-        
-        .notice {
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #00ffea;
-            padding: 12px;
-            margin-top: 25px;
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-            text-align: left;
-        }
-        
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .logo {
-                font-size: 3rem;
-            }
-        }
-    </style>
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div class="login-container">
-        <div class="logo">
-            <i class="fas fa-gamepad"></i>
-        </div>
-        
-        <h1>BattleArenaHub</h1>
-        <p class="tagline">Professional Gaming Dashboard & Tournament Platform</p>
-        
-        <button id="googleLoginBtn" class="google-btn">
-            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
-            Continue with Google
-        </button>
-        
-        <div class="notice">
-            <i class="fas fa-info-circle"></i>
-            Only Google login supported. First-time users need to complete profile setup.
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-coins"></i>
-                <span>Earn Coins & Rewards</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-trophy"></i>
-                <span>Weekly Leaderboard</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-brain"></i>
-                <span>AI Skill Quiz</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-gift"></i>
-                <span>Free Room Codes</span>
-            </div>
-        </div>
-        
-        <div class="game-icons">
-            <div class="game-icon bgmi-icon">
-                <i class="fas fa-crosshairs"></i>
-                <div>BGMI</div>
-            </div>
-            <div class="game-icon ff-icon">
-                <i class="fas fa-fire"></i>
-                <div>Free Fire</div>
-            </div>
-        </div>
-    </div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BattleArenaHub – Login</title>
 
-    <!-- Firebase Authentication Script -->
-    <script type="module">
-        import { auth } from './firebase-config.js';
-        import { 
-            GoogleAuthProvider, 
-            signInWithPopup, 
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            getDoc 
-        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-        
-        // Google Login Handler
-        document.getElementById('googleLoginBtn').addEventListener('click', async () => {
-            try {
-                const provider = new GoogleAuthProvider();
-                
-                // Add scopes
-                provider.addScope('profile');
-                provider.addScope('email');
-                
-                // Show loading
-                const btn = document.getElementById('googleLoginBtn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-                btn.disabled = true;
-                
-                // Sign in with popup
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                
-                console.log("✅ Login successful:", user.email);
-                
-                // Check if user exists in Firestore
-                const db = getFirestore();
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                
-                if (!userDoc.exists()) {
-                    // New user - redirect to profile setup
-                    localStorage.setItem('newUser', JSON.stringify({
-                        uid: user.uid,
-                        email: user.email,
-                        name: user.displayName,
-                        photoURL: user.photoURL
-                    }));
-                    window.location.href = 'profile.html';
-                } else {
-                    // Existing user - redirect to dashboard
-                    window.location.href = 'dashboard.html';
-                }
-                
-            } catch (error) {
-                console.error("❌ Login error:", error);
-                
-                // Reset button
-                const btn = document.getElementById('googleLoginBtn');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                
-                // Show error message
-                if (error.code === 'auth/popup-blocked') {
-                    alert('Popup blocked! Please allow popups for this site.');
-                } else if (error.code === 'auth/cancelled-popup-request') {
-                    // User cancelled, do nothing
-                } else {
-                    alert('Login failed. Please try again.\nError: ' + error.message);
-                }
-            }
-        });
-        
-        // Check if user is already logged in
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log("User already logged in:", user.email);
-                // Auto redirect to dashboard
-                window.location.href = 'dashboard.html';
-            }
-        });
-        
-        // Test Firebase connection
-        console.log("BattleArenaHub Login Page Loaded");
-        console.log("Firebase Auth:", auth ? "Connected" : "Not connected");
-    </script>
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.box{
+  background:#ffffff10;
+  backdrop-filter:blur(12px);
+  padding:30px;
+  width:100%;
+  max-width:420px;
+  border-radius:15px;
+  text-align:center;
+  color:#fff;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+h1{margin-bottom:10px}
+p{opacity:.8}
+button{
+  width:100%;
+  padding:14px;
+  font-size:16px;
+  margin-top:20px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#fff;
+  color:#000;
+  font-weight:bold;
+}
+button:disabled{opacity:.6}
+.features{
+  text-align:left;
+  margin-top:20px;
+  font-size:14px;
+}
+.features div{margin:6px 0}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>🎮 BattleArenaHub</h1>
+  <p>Professional Gaming Dashboard</p>
+
+  <button id="loginBtn">Continue with Google</button>
+
+  <div class="features">
+    <div>✔ Earn Coins</div>
+    <div>✔ Weekly Leaderboard</div>
+    <div>✔ AI Quiz</div>
+    <div>✔ Free Room Codes</div>
+  </div>
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const btn = document.getElementById("loginBtn");
+const provider = new GoogleAuthProvider();
+
+btn.onclick = async () => {
+  btn.innerText="Logging in...";
+  btn.disabled=true;
+  try{
+    await signInWithPopup(auth,provider);
+  }catch(e){
+    alert("Login failed");
+    btn.innerText="Continue with Google";
+    btn.disabled=false;
+  }
+};
+
+onAuthStateChanged(auth, async user=>{
+  if(!user) return;
+
+  const snap = await getDoc(doc(db,"users",user.uid));
+  if(snap.exists()){
+    location.href="dashboard.html";
+  }else{
+    location.href="profile.html";
+  }
+});
+</script>
+
 </body>
 </html>
