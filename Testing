@@ -1,23 +1,97 @@
-// firebase-config.js me ye temporary code dal dein
-console.log("Firebase config loading...");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Firebase Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family:Arial;
+  background:#111;
+  color:#0f0;
+  padding:20px;
+}
+button{
+  padding:12px 20px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+pre{
+  background:#000;
+  padding:10px;
+  margin-top:15px;
+  overflow:auto;
+}
+</style>
+</head>
 
-// Mock Firebase functions for testing
-const mockAuth = {
-    currentUser: null,
-    signInWithPopup: () => Promise.resolve({user: {email: "test@example.com"}})
+<body>
+
+<h2>🔥 Firebase Test Page</h2>
+
+<button id="loginBtn">Google Login Test</button>
+<button id="readBtn">Read Firestore Test</button>
+
+<pre id="log">Waiting...</pre>
+
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const log = (msg)=> {
+  document.getElementById("log").textContent += "\n" + msg;
 };
 
-const mockDb = {
-    collection: () => ({
-        doc: () => ({
-            get: () => Promise.resolve({exists: false}),
-            set: () => Promise.resolve()
-        })
-    })
+log("✅ Firebase file loaded");
+
+const provider = new GoogleAuthProvider();
+
+document.getElementById("loginBtn").onclick = async ()=>{
+  try{
+    const res = await signInWithPopup(auth,provider);
+    log("✅ Login success: " + res.user.email);
+
+    await setDoc(doc(db,"testUsers",res.user.uid),{
+      email: res.user.email,
+      time: new Date()
+    });
+
+    log("✅ Firestore write success");
+  }catch(e){
+    log("❌ Error: " + e.message);
+  }
 };
 
-export const auth = mockAuth;
-export const db = mockDb;
-export const storage = {};
+document.getElementById("readBtn").onclick = async ()=>{
+  if(!auth.currentUser){
+    alert("Login first");
+    return;
+  }
+  const snap = await getDoc(doc(db,"testUsers",auth.currentUser.uid));
+  if(snap.exists()){
+    log("📄 Firestore data: " + JSON.stringify(snap.data(),null,2));
+  }else{
+    log("❌ No document found");
+  }
+};
 
-console.log("✅ Mock Firebase loaded for testing");
+onAuthStateChanged(auth,user=>{
+  if(user){
+    log("👤 Logged in as: "+user.email);
+  }
+});
+</script>
+
+</body>
+</html>
