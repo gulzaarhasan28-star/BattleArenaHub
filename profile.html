@@ -1,106 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Complete Profile</title>
-
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f1f5f9;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.box{
-  background:#fff;
-  padding:25px;
-  width:100%;
-  max-width:400px;
-  border-radius:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,.1);
-}
-h2{text-align:center;margin-bottom:20px}
-input,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-}
-button{
-  background:#4f46e5;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-</style>
+<meta name="viewport" content="width=device-width">
 </head>
-
 <body>
 
-<div class="box">
-  <h2>Complete Profile</h2>
+<h2>Complete Profile</h2>
 
-  <form id="profileForm">
-    <input type="text" id="whatsapp" placeholder="WhatsApp Number" required>
+<form id="form">
+  <input id="whatsapp" placeholder="WhatsApp Number" required><br><br>
 
-    <label>
-      <input type="radio" name="game" value="bgmi" required> BGMI
-    </label><br>
+  <label><input type="radio" name="game" value="bgmi" required> BGMI</label><br>
+  <label><input type="radio" name="game" value="freefire" required> Free Fire</label><br><br>
 
-    <label>
-      <input type="radio" name="game" value="freefire" required> Free Fire
-    </label>
+  <input id="bgmiId" placeholder="BGMI ID" style="display:none">
+  <input id="freefireId" placeholder="Free Fire UID" style="display:none"><br><br>
 
-    <input type="text" id="bgmiId" placeholder="BGMI ID" style="display:none">
-    <input type="text" id="freefireId" placeholder="Free Fire UID" style="display:none">
-
-    <button type="submit">Save & Continue</button>
-  </form>
-</div>
+  <button>Save</button>
+</form>
 
 <script type="module">
 import { auth, db } from "./firebase-config.js";
-import { onAuthStateChanged } from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { doc, setDoc, serverTimestamp } from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-let currentUser = null;
+let user=null;
 
-onAuthStateChanged(auth, user => {
-  if(!user) location.href="index.html";
-  currentUser = user;
+onAuthStateChanged(auth,u=>{
+  if(!u) location.href="index.html";
+  user=u;
 });
 
-document.querySelectorAll('input[name="game"]').forEach(r=>{
-  r.addEventListener("change",()=>{
-    bgmiId.style.display = r.value==="bgmi" ? "block":"none";
-    freefireId.style.display = r.value==="freefire" ? "block":"none";
-  });
+document.querySelectorAll("input[name=game]").forEach(r=>{
+  r.onchange=()=>{
+    bgmiId.style.display = r.value==="bgmi"?"block":"none";
+    freefireId.style.display = r.value==="freefire"?"block":"none";
+  };
 });
 
-profileForm.addEventListener("submit", async e=>{
+form.onsubmit=async e=>{
   e.preventDefault();
+  const game=document.querySelector("input[name=game]:checked").value;
+  const gameId=game==="bgmi"?bgmiId.value:freefireId.value;
 
-  const whatsapp = whatsapp.value.trim();
-  const game = document.querySelector('input[name="game"]:checked').value;
-  const gameId = game==="bgmi" ? bgmiId.value : freefireId.value;
-
-  await setDoc(doc(db,"users",currentUser.uid),{
-    uid: currentUser.uid,
-    email: currentUser.email,
-    name: currentUser.displayName,
-    whatsapp,
+  await updateDoc(doc(db,"users",user.uid),{
+    whatsapp:whatsapp.value,
     game,
-    gameId,
-    coins:0,
-    createdAt: serverTimestamp()
+    gameId
   });
 
   location.href="dashboard.html";
-});
+};
 </script>
 
 </body>
