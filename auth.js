@@ -1,9 +1,9 @@
+// auth.js
 import { auth, db } from "./firebase-config.js";
 
 import {
   GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged
+  signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -14,42 +14,41 @@ import {
 
 const provider = new GoogleAuthProvider();
 
-/* 🔥 IMPORTANT: window ke andar function attach */
-window.loginWithGoogle = async function () {
-  try {
-    console.log("Google login clicked");
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("googleLoginBtn");
 
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+  if (!btn) {
+    console.error("Login button not found");
+    return;
+  }
 
-    console.log("Logged in:", user.email);
+  btn.addEventListener("click", async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-    const userRef = doc(db, "users", user.uid);
-    const snap = await getDoc(userRef);
+      console.log("LOGIN SUCCESS:", user.email);
 
-    if (!snap.exists()) {
-      await setDoc(userRef, {
-        email: user.email,
-        name: user.displayName,
-        photoURL: user.photoURL,
-        coins: 0,
-        createdAt: new Date()
-      });
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
 
-      window.location.href = "profile.html";
-    } else {
-      window.location.href = "dashboard.html";
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          photo: user.photoURL,
+          coins: 0,
+          createdAt: new Date()
+        });
+        window.location.href = "profile.html";
+      } else {
+        window.location.href = "dashboard.html";
+      }
+
+    } catch (e) {
+      alert("Login failed: " + e.message);
+      console.error(e);
     }
-
-  } catch (err) {
-    console.error("Login error", err);
-    alert("Google login failed");
-  }
-};
-
-/* Auto login check */
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Already logged in");
-  }
+  });
 });
