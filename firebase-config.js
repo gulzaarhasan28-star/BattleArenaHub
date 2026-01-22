@@ -7,9 +7,9 @@ const firebaseConfig = {
   apiKey: "AIzaSyDyXFlrTwnkUGFm9FPTw6lv6es7Uu5YhU4",
   authDomain: "battlearenahub-e8377.firebaseapp.com",
   projectId: "battlearenahub-e8377",
-  storageBucket: "battlearenahub-e8377.firebasestorage.app",
-  messagingSenderId: "183863662072",
-  appId: "1:183863662072:web:e06705f1d7415cc3ceb20d"
+  storageBucket: "battlearenahub-e8377.appspot.com",
+  messagingSenderId: "18383662072",
+  appId: "1:18383662072:web:e06705f1d7415cc3ceb20d"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -17,4 +17,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-console.log("🔥 Firebase Connected");
+console.log("🔥 Firebase Connected Successfully");
