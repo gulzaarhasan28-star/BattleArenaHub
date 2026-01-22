@@ -9,46 +9,40 @@ import {
 import {
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const provider = new GoogleAuthProvider();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("googleLoginBtn");
+/* 🔥 IMPORTANT */
+window.loginWithGoogle = async function () {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
 
-  if (!btn) {
-    console.error("Login button not found");
-    return;
-  }
+    console.log("✅ LOGIN SUCCESS:", user.email);
 
-  btn.addEventListener("click", async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
 
-      console.log("LOGIN SUCCESS:", user.email);
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        photo: user.photoURL,
+        coins: 0,
+        weeklyCoins: 0,
+        createdAt: serverTimestamp()
+      });
 
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
-
-      if (!snap.exists()) {
-        await setDoc(ref, {
-          uid: user.uid,
-          email: user.email,
-          name: user.displayName,
-          photo: user.photoURL,
-          coins: 0,
-          createdAt: new Date()
-        });
-        window.location.href = "profile.html";
-      } else {
-        window.location.href = "dashboard.html";
-      }
-
-    } catch (e) {
-      alert("Login failed: " + e.message);
-      console.error(e);
+      location.href = "profile.html";
+    } else {
+      location.href = "dashboard.html";
     }
-  });
-});
+  } catch (e) {
+    alert("Login failed: " + e.message);
+    console.error(e);
+  }
+};
