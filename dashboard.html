@@ -11,4 +11,13 @@ info.innerHTML =
 function go(){
   location.href="tictactoe.html";
 }
+</script> 
+const ADMIN_EMAIL = "admin@gmail.com";
+
+if(localStorage.getItem("email") === ADMIN_EMAIL){
+  document.body.innerHTML +=
+   `<button onclick="location.href='admin.html'">
+     👑 Admin Panel
+    </button>`;
+}
 </script>
