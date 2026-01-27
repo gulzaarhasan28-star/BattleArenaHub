@@ -1,0 +1,12 @@
+<input id="name" placeholder="Player Name">
+<input id="bgmi" placeholder="BGMI ID (numbers)">
+<button onclick="save()">Continue</button>
+
+<script>
+function save(){
+  localStorage.setItem("name", name.value);
+  localStorage.setItem("bgmi", bgmi.value);
+  localStorage.setItem("points", 0);
+  location.href="dashboard.html";
+}
+</script>
