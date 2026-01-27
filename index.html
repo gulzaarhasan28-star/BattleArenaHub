@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCM3QSKM3aY9HS4Ztt_-7brjJwUkT8GH1A",
+  authDomain: "turnamrd.firebaseapp.com",
+  projectId: "turnamrd",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+window.login = () => {
+  signInWithPopup(auth, provider).then(res=>{
+    localStorage.setItem("email", res.user.email);
+    location.href="profile.html";
+  });
+};
+</script>
+</head>
+<body>
+<h2>TicTio Arena</h2>
+<button onclick="login()">Login with Google</button>
+</body>
+</html>
