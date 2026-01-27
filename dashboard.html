@@ -1,0 +1,14 @@
+<h3 id="info"></h3>
+<button onclick="go()">Play Tic Tac Toe</button>
+<button onclick="location.href='leaderboard.html'">Leaderboard</button>
+
+<script>
+info.innerHTML =
+  localStorage.getItem("name") +
+  "<br>BGMI: " + localStorage.getItem("bgmi") +
+  "<br>Points: " + localStorage.getItem("points");
+
+function go(){
+  location.href="tictactoe.html";
+}
+</script>
