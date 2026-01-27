@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+</head>
+<body>
+
+<h2>👑 Admin Panel</h2>
+
+<textarea id="msg" placeholder="Global Message"></textarea>
+<button onclick="sendMsg()">Send Message</button>
+
+<hr>
+
+<h3>Leaderboard</h3>
+<div id="list"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, onValue } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCM3QSKM3aY9HS4Ztt_-7brjJwUkT8GH1A",
+  databaseURL: "https://turnamrd-default-rtdb.firebaseio.com"
+});
+
+const db = getDatabase();
+
+// Load leaderboard
+onValue(ref(db,"users"), snap=>{
+  list.innerHTML="";
+  snap.forEach(d=>{
+    list.innerHTML += `
+      <div>
+        ${d.key} : ${d.val().points}
+        <button onclick="add('${d.key}')">+10</button>
+        <button onclick="minus('${d.key}')">-10</button>
+      </div>`;
+  });
+});
+
+window.add = (name)=>{
+  set(ref(db,"users/"+name+"/points"),
+    Number(prompt("New Points")));
+}
+
+window.minus = add;
+
+window.sendMsg = ()=>{
+  set(ref(db,"adminMessage"), msg.value);
+  alert("Message sent");
+}
+</script>
+
+</body>
+</html>
