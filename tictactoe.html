@@ -1,0 +1,12 @@
+<h2>Tic Tac Toe</h2>
+<div onclick="win()">❌ ❌ ❌</div>
+
+<script>
+function win(){
+  let p = Number(localStorage.getItem("points"));
+  p += 10;
+  localStorage.setItem("points", p);
+  alert("You won +10 points");
+  location.href="dashboard.html";
+}
+</script>
